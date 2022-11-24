@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
 
-function renderPlacesPage(body) {
+function renderPlacesPage(body, onSearchTextChange) {
   return (
     <div className="bg-white p-8 rounded-md w-full">
 	    <div className=" flex items-center justify-between pb-6">
@@ -12,13 +12,20 @@ function renderPlacesPage(body) {
 			    <div className="flex bg-gray-50 items-center p-2 rounded-md">
 				    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
 					    fill="currentColor">
-					    <path fill-rule="evenodd"
+              <path
 						    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-						    clip-rule="evenodd" />
+						    />
 				    </svg>
-				    <input className="bg-gray-50 outline-none ml-1 block " type="text" name="" id="" placeholder="search..." />
+				    <input 
+              className="bg-gray-50 outline-none ml-1 block " 
+              type="text" 
+              name="" 
+              id="" 
+              placeholder="search..." 
+              onChange={onSearchTextChange}
+              />
            </div> 
-          <div class="lg:ml-40 ml-10 space-x-8">
+          <div className="lg:ml-40 ml-10 space-x-8">
 					    <button className="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">New Log</button>
 					   
 				    </div>
@@ -30,12 +37,13 @@ function renderPlacesPage(body) {
   )
 }
 
-function PlacesList(body) {
+function PlacesList() {
   const [loading, setLoading] = useState(true);
   const [loadedPlaces, setLoadedPlaces] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    const apiEndpoint = "/api/places"
+    const apiEndpoint = `/api/places?search_term=${searchTerm}`
     fetch(apiEndpoint)
       .then(response => response.json())
       .then(data => {
@@ -43,7 +51,12 @@ function PlacesList(body) {
         setLoadedPlaces(data["places"])
         setLoading(false)
       });
-  }, [])
+  }, [searchTerm])
+
+  const onSearchTextChange = (e) => {
+    setLoading(true);
+    setSearchTerm(e.target.value);
+  }
 
   const loadingSection = (<div>Loading...</div>)
   
@@ -98,9 +111,9 @@ function PlacesList(body) {
   )
 
   if (loading) {
-    return renderPlacesPage(loadingSection)
+    return renderPlacesPage(loadingSection, onSearchTextChange)
   } else {
-    return renderPlacesPage(dataSection)
+    return renderPlacesPage(dataSection, onSearchTextChange)
   }
 }
        

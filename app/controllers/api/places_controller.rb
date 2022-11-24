@@ -2,6 +2,7 @@ module Api
     class PlacesController < ApplicationController
 
         def index
+            puts params
             places = Place.all.map do |place|
                 {
                     name: place.name,
@@ -11,7 +12,7 @@ module Api
                     number_of_measurements: number_of_measurements(place)
                 }
             end
-            render(json: { places:places})
+            render(json: { places: places})
         end
 
         def most_recent_download_speed(place)
