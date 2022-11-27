@@ -3,7 +3,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  root "places#index"
+  
 
   get "/api/places", to: "api/places#index"
+  get "*path", to: "react#home"
+
+  root "react#home"
 end
