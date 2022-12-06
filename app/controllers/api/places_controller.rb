@@ -1,5 +1,5 @@
 module Api
-    class PlacesController < ApplicationController
+    class PlacesController < BaseController
 
         def index
             puts params
