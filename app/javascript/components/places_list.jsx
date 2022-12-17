@@ -72,8 +72,8 @@ export default function PlacesList() {
               <tr>
                 <th className={tableHeaderClass}>Name</th>
                 <th className={tableHeaderClass}>City</th>
-                <th className={tableHeaderClass}>Recent Upload Speed</th>
-                <th className={tableHeaderClass}>Recent Upload Speed Units</th>
+                <th className={tableHeaderClass}>Recent Download Speed</th>
+                <th className={tableHeaderClass}>Recent Download Speed Units</th>
                 <th className={tableHeaderClass}>Number of measurements</th>
               </tr>
             </thead>
